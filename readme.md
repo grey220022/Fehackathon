@@ -11,10 +11,10 @@ or (./fe build tictactoe.fe   --overwrite ) for non-mac user
 
 4. deploy the smart contract with
 
-cast send --rpc-url localhost:8545 --private-key {{private_key}} --create $(cat output/TicTacToe/TicTacToe.bin)
+"cast send --rpc-url localhost:8545 --private-key {{private_key}} --create $(cat output/TicTacToe/TicTacToe.bin)"
 
 5. get the private key from the "anvil" command terminal and modify the file "config.ini" according the contract address and the private key. Save the file "config.ini"
 
 6. Launch the game with
 
-python tictactoe.py
+    "python tictactoe.py"
