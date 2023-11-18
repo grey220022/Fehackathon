@@ -1,0 +1,55 @@
+contract TicTacToe {
+    board: Map<u8, u8>
+    current_player: u8 // player is 1 or 2
+    game_status: u8
+
+    pub fn init(mut self){
+        self.current_player = 1
+        self.game_status = 0
+        let range9: Array<u8, 9> = [0, 1, 2, 3, 4, 5, 6, 7, 8]        
+        for i in range9{
+            self.board[i] = 0
+        }
+    }
+
+    pub fn make_move(mut self,position: u8){
+        assert self.game_status<2, "Game already ended"
+        assert self.board[position] == 0, "Position already taken"
+
+        self.board[position] = self.current_player
+        // Check for a win
+        if self.is_winner(){
+            self.game_status = 1
+        }
+        // Check for a draw
+        if self.is_draw(){
+            self.game_status = 2
+        }
+
+        self.current_player = 3 - self.current_player // switch player as player is 1 or 2
+    }
+    pub fn get_gamestatus(mut self)->u8{
+      return self.game_status
+    }
+    fn is_winner(mut self) -> bool {
+        let wins: Array<Array<u8, 3>, 8> = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+        for win in wins{
+            if self.board[win[0]]> 0{
+              if self.board[win[0]] == self.board[win[1]] and self.board[win[1]] == self.board[win[2]]  {
+                return true
+              }
+            }
+        }
+        return false
+    }
+
+    fn is_draw(mut self) -> bool {
+        let range9: Array<u8, 9> = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        for i in range9{
+              if self.board[i] == 0{
+                return false
+              }
+        }
+        return true
+    }
+}
